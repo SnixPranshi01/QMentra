@@ -1,0 +1,82 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "QMentra: Start web app",
+            "type": "process",
+            "command": "npm",
+            "args": [
+                "run",
+                "dev"
+            ],
+            "isBackground": true,
+            "problemMatcher": {
+                "owner": "qmentra-vite",
+                "pattern": {
+                    "regexp": "^$",
+                    "message": 1
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "vite",
+                    "endsPattern": "Local:"
+                }
+            },
+            "presentation": {
+                "group": "qmentra",
+                "panel": "dedicated"
+            }
+        },
+        {
+            "label": "QMentra: Start API",
+            "type": "process",
+            "command": "${workspaceFolder}/.venv/bin/python",
+            "windows": {
+                "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe"
+            },
+            "args": [
+                "-m",
+                "uvicorn",
+                "backend.main:app",
+                "--reload",
+                "--host",
+                "0.0.0.0",
+                "--port",
+                "8000"
+            ],
+            "isBackground": true,
+            "problemMatcher": {
+                "owner": "qmentra-api",
+                "pattern": {
+                    "regexp": "^$",
+                    "message": 1
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "Uvicorn running",
+                    "endsPattern": "Application startup complete"
+                }
+            },
+            "presentation": {
+                "group": "qmentra",
+                "panel": "dedicated"
+            }
+        },
+        {
+            "label": "QMentra: Start PostgreSQL",
+            "type": "process",
+            "command": "docker",
+            "args": [
+                "compose",
+                "up",
+                "-d",
+                "postgres"
+            ],
+            "problemMatcher": [],
+            "presentation": {
+                "group": "qmentra",
+                "panel": "dedicated"
+            }
+        }
+    ]
+}
